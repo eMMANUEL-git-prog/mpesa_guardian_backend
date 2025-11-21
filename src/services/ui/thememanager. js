@@ -1,0 +1,25 @@
+// src/routes/themeRoutes.js
+const express = require("express");
+const router = express.Router();
+const themeManager = require("../services/ui/themeManager");
+
+router.get("/", (req, res) => {
+  res.json({ theme: themeManager.getTheme() });
+});
+
+router.post("/toggle", (req, res) => {
+  const newTheme = themeManager.toggleTheme();
+  res.json({ theme: newTheme });
+});
+
+router.post("/set", (req, res) => {
+  try {
+    const { mode } = req.body;
+    const newTheme = themeManager.setTheme(mode);
+    res.json({ theme: newTheme });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+module.exports = router;
