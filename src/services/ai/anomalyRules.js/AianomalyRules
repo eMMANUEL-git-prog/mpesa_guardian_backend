@@ -1,0 +1,36 @@
+module.exports = {
+  detectAnomalies(transaction) {
+    const alerts = [];
+
+    // Rule 1: Very high transaction amount
+    if (transaction.amount > 50000) {
+      alerts.push("High-Value Transaction");
+    }
+
+    // Rule 2: Too many reversals
+    if (transaction.reversalCount && transaction.reversalCount > 2) {
+      alerts.push("Frequent Reversals");
+    }
+
+    // Rule 3: Unusual transaction traffic
+    if (transaction.frequency && transaction.frequency > 5) {
+      alerts.push("Rapid High Traffic Activity");
+    }
+
+    // Rule 4: Late-night suspicious activity
+    if (transaction.time && transaction.time >= 0 && transaction.time <= 4) {
+      alerts.push("Suspicious Late-Night Transaction");
+    }
+
+    // Rule 5: New device or location change
+    if (transaction.deviceChanged) {
+      alerts.push("New Device Used");
+    }
+
+    if (transaction.locationChanged) {
+      alerts.push("Location Shift Detected");
+    }
+
+    return alerts;
+  }
+};
